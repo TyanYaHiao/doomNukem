@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mapeditor.c                                        :+:      :+:    :+:   */
+/*   me_keyboard_handler.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/08 14:45:37 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/08 17:32:56 by fsmith           ###   ########.fr       */
+/*   Created: 2019/09/08 17:30:14 by fsmith            #+#    #+#             */
+/*   Updated: 2019/09/08 17:30:14 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mapeditor.h>
 
-int		main(int argc, char **argv)
+void	me_keyboard_handler(t_editor *editor)
 {
-	t_editor editor;
-
-	me_init(&editor);
-	SDL_UpdateWindowSurface(editor.win);
-	SDL_RenderDrawPoint(editor.ren, 70, 90);
-	while(editor.run)
+	if (SDL_PollEvent(&editor->event))
 	{
-		me_keyboard_handler(&editor);
+		if (editor->event.type == SDL_KEYDOWN)
+		{
+			if (editor->event.key.keysym.sym == SDLK_ESCAPE)
+			{
+				editor->run = 0;
+			}
+		}
 	}
-	me_quit(&editor);
-	return 0;
-}
-
-void me_quit(t_editor *editor)
-{
-	SDL_DestroyWindow(editor->win);
-	SDL_Quit();
 }

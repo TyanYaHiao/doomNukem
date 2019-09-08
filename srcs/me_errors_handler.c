@@ -1,34 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mapeditor.c                                        :+:      :+:    :+:   */
+/*   me_errors_handler.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/08 14:45:37 by fsmith            #+#    #+#             */
-/*   Updated: 2019/09/08 17:32:56 by fsmith           ###   ########.fr       */
+/*   Created: 2019/09/08 17:01:20 by fsmith            #+#    #+#             */
+/*   Updated: 2019/09/08 17:06:14 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mapeditor.h>
 
-int		main(int argc, char **argv)
+void 	me_init_error_handler(char *reason)
 {
-	t_editor editor;
-
-	me_init(&editor);
-	SDL_UpdateWindowSurface(editor.win);
-	SDL_RenderDrawPoint(editor.ren, 70, 90);
-	while(editor.run)
-	{
-		me_keyboard_handler(&editor);
-	}
-	me_quit(&editor);
-	return 0;
-}
-
-void me_quit(t_editor *editor)
-{
-	SDL_DestroyWindow(editor->win);
-	SDL_Quit();
+	ft_putendl("Init error!");
+	ft_putstr("Cannot init ");
+	ft_putstr(reason);
+	ft_putendl("!");
+	exit(ERROR_CODE_INIT);
 }

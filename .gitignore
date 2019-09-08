@@ -5,3 +5,9 @@ cmake-build-debug/
 *.a
 *.o
 .DS_Store
+CMake/
+lib/sdl2/cmake/SDL2/
+lib/sdl2/includes/
+lib/sdl2/libSDL2-2.0.0.dylib
+lib/sdl2/libSDL2.dylib
+lib/sdl2/pkgconfig/
