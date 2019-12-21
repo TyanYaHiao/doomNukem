@@ -1,164 +1,152 @@
 cmake_minimum_required(VERSION 3.13)
-project(MapEditor C)
+project(DoomNukem)
 
-set(CMAKE_C_STANDARD 11)
+add_custom_target(makeDoomNukem
+		COMMAND make
+		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+add_custom_target(makeDoomNukem_2
+		COMMAND make
+		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+set(CMAKE_CXX_STANDARD 14)
+
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror
+					-march=native -m64 -Ofast -O2 -flto -funroll-loops" )
+
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
 
-include_directories(includes)
+include_directories(engine/includes)
+include_directories(engine/includes/SDL2)
+include_directories(game/includes)
+include_directories(editor/includes)
 include_directories(lib/libft/includes)
-include_directories(lib)
 include_directories(${SDL2_INCLUDE_DIR})
-
+include_directories(${SDL2_MIXER_INCLUDE_DIR})
+include_directories(${SDL2_TTF_INCLUDE_DIR})
 
 find_package(SDL2 REQUIRED)
+find_package(SDL2_mixer REQUIRED)
+find_package(SDL2_ttf REQUIRED)
 
-add_executable(MapEditor
-		includes/mapeditor.h
-		lib/libft/includes/libft.h
-		lib/libft/srcs/ft_atoi.c
-		lib/libft/srcs/ft_atoi_hex.c
-		lib/libft/srcs/ft_bzero.c
-		lib/libft/srcs/ft_isalnum.c
-		lib/libft/srcs/ft_isalpha.c
-		lib/libft/srcs/ft_isascii.c
-		lib/libft/srcs/ft_isblank.c
-		lib/libft/srcs/ft_isdigit.c
-		lib/libft/srcs/ft_islower.c
-		lib/libft/srcs/ft_isprint.c
-		lib/libft/srcs/ft_isspace.c
-		lib/libft/srcs/ft_itoa.c
-		lib/libft/srcs/ft_itoa_base.c
-		lib/libft/srcs/ft_lstadd.c
-		lib/libft/srcs/ft_lstdel.c
-		lib/libft/srcs/ft_lstdelone.c
-		lib/libft/srcs/ft_lstiter.c
-		lib/libft/srcs/ft_lstmap.c
-		lib/libft/srcs/ft_lstnew.c
-		lib/libft/srcs/ft_lstreduce.c
-		lib/libft/srcs/ft_memalloc.c
-		lib/libft/srcs/ft_memccpy.c
-		lib/libft/srcs/ft_memchr.c
-		lib/libft/srcs/ft_memcmp.c
-		lib/libft/srcs/ft_memcpy.c
-		lib/libft/srcs/ft_memdel.c
-		lib/libft/srcs/ft_memmove.c
-		lib/libft/srcs/ft_memset.c
-		lib/libft/srcs/ft_putchar.c
-		lib/libft/srcs/ft_putchar_fd.c
-		lib/libft/srcs/ft_putendl.c
-		lib/libft/srcs/ft_putendl_fd.c
-		lib/libft/srcs/ft_putnbr.c
-		lib/libft/srcs/ft_putnbr_fd.c
-		lib/libft/srcs/ft_putstr.c
-		lib/libft/srcs/ft_putstr_fd.c
-		lib/libft/srcs/ft_strcapitalize.c
-		lib/libft/srcs/ft_strcat.c
-		lib/libft/srcs/ft_strchr.c
-		lib/libft/srcs/ft_strclr.c
-		lib/libft/srcs/ft_strcmp.c
-		lib/libft/srcs/ft_strcpy.c
-		lib/libft/srcs/ft_strdel.c
-		lib/libft/srcs/ft_strdup.c
-		lib/libft/srcs/ft_strequ.c
-		lib/libft/srcs/ft_striter.c
-		lib/libft/srcs/ft_striteri.c
-		lib/libft/srcs/ft_strjoin.c
-		lib/libft/srcs/ft_strlcat.c
-		lib/libft/srcs/ft_strlen.c
-		lib/libft/srcs/ft_strmap.c
-		lib/libft/srcs/ft_strmapi.c
-		lib/libft/srcs/ft_strncat.c
-		lib/libft/srcs/ft_strncmp.c
-		lib/libft/srcs/ft_strncpy.c
-		lib/libft/srcs/ft_strnequ.c
-		lib/libft/srcs/ft_strnew.c
-		lib/libft/srcs/ft_strnstr.c
-		lib/libft/srcs/ft_strrchr.c
-		lib/libft/srcs/ft_strsplit.c
-		lib/libft/srcs/ft_strsplitwhitespaces.c
-		lib/libft/srcs/ft_strstr.c
-		lib/libft/srcs/ft_strsub.c
-		lib/libft/srcs/ft_strtrim.c
-		lib/libft/srcs/ft_strwcmp.c
-		lib/libft/srcs/ft_tolower.c
-		lib/libft/srcs/ft_toupper.c
-		lib/libft/srcs/get_next_line.c
-		lib/SDL2/begin_code.h
-		lib/SDL2/close_code.h
-		lib/SDL2/SDL.h
-		lib/SDL2/SDL_assert.h
-		lib/SDL2/SDL_atomic.h
-		lib/SDL2/SDL_audio.h
-		lib/SDL2/SDL_bits.h
-		lib/SDL2/SDL_blendmode.h
-		lib/SDL2/SDL_clipboard.h
-		lib/SDL2/SDL_config.h
-		lib/SDL2/SDL_cpuinfo.h
-		lib/SDL2/SDL_egl.h
-		lib/SDL2/SDL_endian.h
-		lib/SDL2/SDL_error.h
-		lib/SDL2/SDL_events.h
-		lib/SDL2/SDL_filesystem.h
-		lib/SDL2/SDL_gamecontroller.h
-		lib/SDL2/SDL_gesture.h
-		lib/SDL2/SDL_haptic.h
-		lib/SDL2/SDL_hints.h
-		lib/SDL2/SDL_joystick.h
-		lib/SDL2/SDL_keyboard.h
-		lib/SDL2/SDL_keycode.h
-		lib/SDL2/SDL_loadso.h
-		lib/SDL2/SDL_log.h
-		lib/SDL2/SDL_main.h
-		lib/SDL2/SDL_messagebox.h
-		lib/SDL2/SDL_mouse.h
-		lib/SDL2/SDL_mutex.h
-		lib/SDL2/SDL_name.h
-		lib/SDL2/SDL_opengl.h
-		lib/SDL2/SDL_opengl_glext.h
-		lib/SDL2/SDL_opengles.h
-		lib/SDL2/SDL_opengles2.h
-		lib/SDL2/SDL_opengles2_gl2.h
-		lib/SDL2/SDL_opengles2_gl2ext.h
-		lib/SDL2/SDL_opengles2_gl2platform.h
-		lib/SDL2/SDL_opengles2_khrplatform.h
-		lib/SDL2/SDL_pixels.h
-		lib/SDL2/SDL_platform.h
-		lib/SDL2/SDL_power.h
-		lib/SDL2/SDL_quit.h
-		lib/SDL2/SDL_rect.h
-		lib/SDL2/SDL_render.h
-		lib/SDL2/SDL_revision.h
-		lib/SDL2/SDL_rwops.h
-		lib/SDL2/SDL_scancode.h
-		lib/SDL2/SDL_sensor.h
-		lib/SDL2/SDL_shape.h
-		lib/SDL2/SDL_stdinc.h
-		lib/SDL2/SDL_surface.h
-		lib/SDL2/SDL_system.h
-		lib/SDL2/SDL_syswm.h
-		lib/SDL2/SDL_test.h
-		lib/SDL2/SDL_test_assert.h
-		lib/SDL2/SDL_test_common.h
-		lib/SDL2/SDL_test_compare.h
-		lib/SDL2/SDL_test_crc32.h
-		lib/SDL2/SDL_test_font.h
-		lib/SDL2/SDL_test_fuzzer.h
-		lib/SDL2/SDL_test_harness.h
-		lib/SDL2/SDL_test_images.h
-		lib/SDL2/SDL_test_log.h
-		lib/SDL2/SDL_test_md5.h
-		lib/SDL2/SDL_test_memory.h
-		lib/SDL2/SDL_test_random.h
-		lib/SDL2/SDL_thread.h
-		lib/SDL2/SDL_timer.h
-		lib/SDL2/SDL_touch.h
-		lib/SDL2/SDL_ttf.h
-		lib/SDL2/SDL_types.h
-		lib/SDL2/SDL_version.h
-		lib/SDL2/SDL_video.h
-		lib/SDL2/SDL_vulkan.h
-		srcs/mapeditor.c
-		srcs/me_errors_handler.c
-		srcs/me_keyboard_handler.c srcs/me_init.c)
+set(SDL_INCLUDES engine/includes/SDL2/)
 
-target_link_libraries(MapEditor ${SDL2_LIBRARY})
+set(GAME_INC game/includes/game.h)
+set(GAME_SRC
+		game/srcs/freefps.c
+		game/srcs/weapon_fire.c
+		game/srcs/game_controller_down.c
+		game/srcs/game_controller_up.c
+		game/srcs/game_movement.c
+		game/srcs/game_movement_funs.c
+		game/srcs/gravitation.c
+		game/srcs/multi_threading.c
+		game/srcs/menu.c
+		game/srcs/game_collision_detector.c
+		game/srcs/parser_menu.c
+		game/srcs/parser_game.c game/srcs/menu_2.c)
+
+set(ENG_INC engine/includes/engine.h)
+set(ENG_SRC
+		engine/srcs/intersection_funs.c
+		engine/srcs/intersection_funs_help.c
+		engine/srcs/render_cycle.c
+		engine/srcs/render_cycle2.c
+		engine/srcs/render_wall.c
+		engine/srcs/render_wall_help.c
+		engine/srcs/render_world.c
+		engine/srcs/render_main.c
+		engine/srcs/render_particle.c
+		engine/srcs/render_particle_2.c
+		engine/srcs/sprite_render.c
+		engine/srcs/sprite_render_2.c
+		engine/srcs/shoot_main.c
+		engine/srcs/error_handler.c
+		engine/srcs/hud_draw.c
+		engine/srcs/hud_draw1.c
+		engine/srcs/objects.c
+		engine/srcs/parser.c
+		engine/srcs/parser_errors.c
+		engine/srcs/parser_filler.c
+		engine/srcs/parser_reader.c
+		engine/srcs/parser_utility.c
+		engine/srcs/parser_texture.c
+		engine/srcs/utility.c
+		engine/srcs/parser_weapon.c
+		engine/srcs/parser_enemy.c
+		engine/srcs/relative_coord.c
+		engine/srcs/parser_items.c
+		engine/srcs/parser_hud.c
+		engine/srcs/sound.c
+		engine/srcs/sprite_render.c
+		engine/srcs/sprite_render_stack.c
+		engine/srcs/sort.c
+		engine/srcs/render_stack.c
+		engine/srcs/parser_checksum.c
+		engine/srcs/parser_player.c
+		engine/srcs/parser_items_2.c
+		engine/srcs/sound_2.c
+		engine/srcs/parser_point_3d.c
+		engine/srcs/parser_sprite.c
+		engine/srcs/parser_object.c
+		engine/srcs/parser_sector.c
+		engine/srcs/parser_sprobject.c
+		engine/srcs/parser_worldbox.c
+		engine/srcs/parser_player_2.c
+		engine/srcs/parser_world.c
+		engine/srcs/parser_sector_2.c
+		engine/srcs/parser_errors_2.c
+		engine/srcs/parser_errors_3.c
+		engine/srcs/parser_sprite_2.c
+		engine/srcs/objects_help.c
+		engine/srcs/render_wall2.c
+		engine/srcs/shoot_help.c
+		engine/srcs/shoot_main.c
+		engine/srcs/shoot_main2.c
+		engine/srcs/utils_check_stack.c
+		engine/srcs/vectors_normal.c
+		engine/srcs/parser_player_2.c
+		engine/srcs/parser_color.c
+		engine/srcs/parser_package.c
+		game/srcs/parser_filename.c
+		engine/srcs/parser_sprite_360.c
+		engine/srcs/sprite_data.c
+		engine/srcs/parser_button.c
+		engine/srcs/parser_wallobjects.c
+		engine/srcs/engine_close.c
+		engine/srcs/engine_font.c
+		engine/srcs/engine_main.c
+		engine/srcs/engine_texture.c
+		engine/srcs/engine_texture_math.c
+		engine/srcs/game_pickup.c
+		engine/srcs/line_bresenham.c
+		engine/srcs/line_bresenham2.c
+		engine/srcs/line_color.c
+		engine/srcs/loader_images.c
+		engine/srcs/render_background.c
+		engine/srcs/use.c
+		engine/srcs/engine_texture_scale_koef.c
+		engine/srcs/engine_wall_objects_init.c engine/srcs/parser_checksum_errors.c engine/srcs/parser_items_3.c engine/srcs/parser_object_2.c engine/srcs/parser_errors_4.c)
+
+set(EDITOR_INC editor/includes/editor.h)
+set(EDITOR_SRC
+		editor/srcs/checksum.c
+		editor/srcs/checksum_errors.c)
+
+add_executable(DoomNukem
+				${GAME_INC} ${GAME_SRC}
+				${ENG_INC} ${ENG_SRC}
+				${SDL_DIRECTORY} ${SDL_INCLUDES})
+
+#add_executable(DoomEditor
+#			${ENG_INC} ${ENG_SRC}
+#			${EDITOR_INC} ${EDITOR_SRC}
+#			${SDL_DIRECTORY} ${SDL_INCLUDES})
+
+add_subdirectory(lib/libft)
+
+#add_definitions(-Wall -Werror -Wextra -march=native -m64 -Ofast -O2 -flto -funroll-loops)
+#add_definitions(-march=native -m64 -Ofast -O2 -flto -funroll-loops)
+
+target_link_libraries(DoomNukem ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARY} ${SDL2_TTF_LIBRARY} libft)
+#target_link_libraries(DoomEditor ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARY} ${SDL2_TTF_LIBRARY} libft)

@@ -6,7 +6,7 @@
 #    By: zytrams <zytrams@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/05 20:34:56 by zytrams           #+#    #+#              #
-#    Updated: 2019/08/30 20:08:29 by fsmith           ###   ########.fr        #
+#    Updated: 2019/08/26 20:24:27 by zytrams          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,13 +41,14 @@ all: $(NAME)
 $(NAME): $(OBJS_DIRECTORY) $(OBJS)
 	@ar rc libft.a $(OBJS)
 	@ranlib libft.a
+	@echo -n '.'
 
 $(OBJS_DIRECTORY):
 	@mkdir -p $(OBJS_DIRECTORY)
-	@echo $(NAME): $(OBJS_DIRECTORY) was created
 
 $(OBJS_DIRECTORY)%.o: $(SRCS_DIRECTORY)%.c $(HEADERS)
 	@$(CC) $(FLAGS) -c $(INCLUDES) $< -o $@
+	@echo -n '.'
 
 clean:
 	@rm -rf $(OBJS)
